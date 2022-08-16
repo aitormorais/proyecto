@@ -1,0 +1,3 @@
+- pipeline.id: input-filebeat
+  path.config: "/pipelines/filebeat"
+  queue.type : persisted

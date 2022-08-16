@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+   filebeat:
+      image: docker.elastic.co/beats/filebeat:7.16.3
+      hostname: "filebeat"
+      container_name: "filebeat_"
+      entrypoint: "filebeat -e -strict.perms=false"
+      volumes:
+        - "./log:/log"
+        - ./conf/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+   logstash:
+      image: logstash:7.16.3
+      hostname: "logstash"
+      container_name: "logstash_"
+      user: root
+      volumes:
+        - "./data:/data:rw"
+        - "./conf/logstash/conf:/pipelines"
+        - "./conf/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml"
