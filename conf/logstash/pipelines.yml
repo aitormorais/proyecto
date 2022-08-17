@@ -1,3 +1,8 @@
 - pipeline.id: input-filebeat
   path.config: "/pipelines/filebeat"
   queue.type : persisted
+
+- pipeline.id: input-packetbeat
+  path.config: "/pipelines/packetbeat"
+  queue.type : persisted
+
