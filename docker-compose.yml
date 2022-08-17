@@ -27,10 +27,38 @@ services:
          - ./conf/packetbeat/packetbeat.yml:/usr/share/packetbeat/packetbeat.yml
       cap_add: ['NET_RAW', 'NET_ADMIN']
       command: ["--strict.perms=false"]
-      network_mode: "host"
    dockertutorial:
       image: docker/getting-started
       container_name: "dockertutorial"
       hostname: "dockertutorial"
       ports:
          - 80:80
+#  auditbeat:
+#     image: docker.elastic.co/beats/auditbeat:${ELASTIC_VERSION:-7.9.1}
+#   # https://github.com/docker/swarmkit/issues/1951
+#     hostname: "{{.Node.Hostname}}-auditbeat"
+#   # Need to override user so we can access the log files, and docker.sock
+#     user: root
+#   # https://www.elastic.co/guide/en/beats/auditbeat/current/running-on-docker.html#_special_requirements
+#   # PID and CAP_ADD options are ignored as they are Not yet available in swarm mode at the moment.
+#   # Eagerly waiting for Docker 19.06 release which will bring --privileged flag to Docker
+#   # Swarm Mode https://github.com/moby/moby/issues/24862#issuecomment-451594187
+#   # support for capabilities https://github.com/moby/moby/pull/38380
+#     pid: host
+#     cap_add:
+#        - AUDIT_CONTROL
+#        - AUDIT_READ
+#     networks:
+#        - elastic
+#
+#     volumes:
+#        - auditbeat:/usr/share/auditbeat/data
+#        - /var/log:/var/log:ro
+#     environment:
+#        - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST:-node1}
+#        - KIBANA_HOST=${KIBANA_HOST:-node1}
+#        - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME:-elastic}
+#        - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD:-changeme}
+#     command: ["--strict.perms=false"]
+#     deploy:
+#        mode: global
